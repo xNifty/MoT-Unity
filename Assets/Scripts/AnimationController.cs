@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class AnimationController : MonoBehaviour {
+public class vvAnimationController : MonoBehaviour {
 	
 	public float maximumSpeed = 10f;
 
