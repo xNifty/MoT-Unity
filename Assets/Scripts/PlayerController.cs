@@ -30,10 +30,10 @@ public class PlayerController : MonoBehaviour {
 		return GameObject.FindGameObjectsWithTag(objectTag).Length;
 	}
 
-	public bool IsLevelComplete(int playerCoins)
+	public bool IsLevelComplete()
 	{
 		// Eventually this'll open the gate guarding the door to next level
-		if (_totalCoinsInLevel != playerCoins)
+		if (_totalCoinsInLevel != PlayerCoinCount)
 		{
 			return false;
 		}

@@ -22,10 +22,11 @@ public class CoinController : MonoBehaviour
 		{
 			Destroy(gameObject);
 			other.gameObject.GetComponent<PlayerController>().IncreaseCoinCount();
-			
-			other.gameObject.GetComponent<PlayerController>().IsLevelComplete(
-				other.gameObject.GetComponent<PlayerController>().GetPlayerCoinCount()
-			);
+
+			if (other.gameObject.GetComponent<PlayerController>().IsLevelComplete())
+			{
+				DoorController.DeleteDoor();
+			}
 		}
 	}
 }

@@ -2,40 +2,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 // @TODO : handle building level from TileMap
 
 public class LevelManager : MonoBehaviour
 {
-    private int _totalCoinsInLevel = 0;
-    
-    void Start ()
-    {
-        _totalCoinsInLevel = CountGameObjectsByTag("Coin");
-        Debug.Log(_totalCoinsInLevel);
-    }
+    public int CurrentLevel = 1;
+    public int PlayerDeaths = 0;
 
-    // Count the number of objects with a particular tag
-    private int CountGameObjectsByTag(string objectTag)
+    void Start()
     {
-        return GameObject.FindGameObjectsWithTag(objectTag).Length;
+        Screen.SetResolution(800, 600, false);
+        LoadLevel(CurrentLevel);
     }
-
-    public bool IsLevelComplete(int playerCoins)
-    {
-        // Eventually this'll open the gate guarding the door to next level
-        if (_totalCoinsInLevel != playerCoins)
-        {
-            return false;
-        }
         
-        Debug.Log("Level complete!");
-        return true;
-
+    /*
+     * Load a level
+     * If the scene doesn't exist, we congratulate the user on winning!
+     * If it does, they keep playing!
+     */
+    public void LoadLevel(int level)
+    {
+        SceneManager.LoadScene("Level" + CurrentLevel);
+        if (!SceneManager.GetSceneByName("Level" + CurrentLevel).IsValid())
+        {
+            Debug.Log("Game Over!");
+            //Environment.Exit(0);
+        }
     }
 
-    private void ResetTotalCoins()
+    /*
+     * Destroy the level
+     */
+    public void DestroyLevel()
     {
-        _totalCoinsInLevel = 0;
+        Destroy(gameObject);
+    }
+
+    /*
+     * Called when colliding with the key at the end of a level
+     */
+    public void IncrementLevelCounter()
+    {
+        CurrentLevel += 1;
+    }
+
+    public int GetCurrentLevel()
+    {
+        return CurrentLevel;
+    }
+
+    public void IncrementPlayerDeaths()
+    {
+        PlayerDeaths += 1;
+    }
+
+    public void UpdatePlayerDeathsText()
+    {
+        var text = GameObject.Find("DeathsText").GetComponent<Text>();
+        text.text = "Deaths: " + PlayerDeaths;
     }
 }
