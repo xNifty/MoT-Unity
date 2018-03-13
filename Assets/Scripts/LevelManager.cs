@@ -28,8 +28,8 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene("Level" + CurrentLevel);
         if (!SceneManager.GetSceneByName("Level" + CurrentLevel).IsValid())
         {
-            Debug.Log("Game Over!");
-            //Environment.Exit(0);
+            Destroy(GameObject.Find("DeathsText"));
+            SceneManager.LoadScene("GameOver");
         }
     }
 
